@@ -12,7 +12,7 @@ function list(isShowing) {
 }
 
 function read(movieId) {
-  console.log(`movies service read running`)
+  // console.log(`movies service read running`)
   return knex('movies')
     .select('*')
     .where({ movie_id: movieId })

@@ -7,6 +7,11 @@ function list(movieId) {
     .where({ 'r.movie_id': movieId });
 }
 
+function read(criticId) {
+  return knex('critics').select('*').where({critic_id: criticId}).first();
+}
+
 module.exports = {
-    list
+    list,
+    read
 };
