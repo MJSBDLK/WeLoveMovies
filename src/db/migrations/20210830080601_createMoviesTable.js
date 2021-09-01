@@ -7,6 +7,7 @@ exports.up = function(knex) {
       table.string('rating');
       table.text('description');
       table.string('image_url');
+      table.timestamps(true, true);
   })
 };
 
@@ -15,3 +16,4 @@ exports.down = function(knex) {
 };
 
 // npx knex migrate:up 20210830080601_createMoviesTable.js
+// npx knex migrate:down 20210830080601_createMoviesTable.js

@@ -1,3 +1,4 @@
+// const { destroy } = require('../db/connection');
 const knex = require('../db/connection');
 
 function list(movieId) {
@@ -7,11 +8,22 @@ function list(movieId) {
     .where({ 'r.movie_id': movieId });
 }
 
-function read(criticId) {
+function readCritic(criticId) {
   return knex('critics').select('*').where({critic_id: criticId}).first();
+}
+
+function readReview(reviewId) {
+  return knex('reviews').select('*').where({review_id: reviewId}).first();
+}
+
+function destroy(reviewId) {
+  // add reviewId in the table migration
+  return knex('reviews').where({review_id: reviewId}).del();
 }
 
 module.exports = {
     list,
-    read
+    readCritic,
+    readReview,
+    delete: destroy
 };

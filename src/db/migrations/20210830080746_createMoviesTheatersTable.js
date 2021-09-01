@@ -14,6 +14,7 @@ exports.up = function (knex) {
       .inTable('movies')
       .onDelete('cascade');
     table.primary(['theater_id', 'movie_id']);
+    table.timestamps(true, true);
   });
 };
 
@@ -22,3 +23,4 @@ exports.down = function (knex) {
 };
 
 // npx knex migrate:up 20210830080746_createMoviesTheatersTable.js
+// npx knex migrate:down 20210830080746_createMoviesTheatersTable.js

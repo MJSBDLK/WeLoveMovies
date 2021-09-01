@@ -8,6 +8,7 @@ exports.up = function(knex) {
       table.string('city');
       table.string('state');
       table.string('zip');
+      table.timestamps(true, true);
   })
 };
 
@@ -16,3 +17,4 @@ exports.down = function(knex) {
   };
 
   // npx knex migrate:up 20210830080721_createTheatersTable.js
+  // npx knex migrate:down 20210830080721_createTheatersTable.js

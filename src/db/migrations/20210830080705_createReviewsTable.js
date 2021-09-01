@@ -1,5 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.createTable('reviews', (table) => {
+    table.increments('review_id').primary()
     table.text('content');
     table.integer('score');
     table.integer('critic_id').unsigned().notNullable();
@@ -14,7 +15,7 @@ exports.up = function (knex) {
       .references('movie_id')
       .inTable('movies')
       .onDelete('cascade');
-    table.primary(['critic_id', 'movie_id']);
+    table.timestamps(true, true);
   });
 };
 
@@ -23,3 +24,4 @@ exports.down = function (knex) {
 };
 
 // npx knex migrate:up 20210830080705_createReviewsTable.js
+// npx knex migrate:down 20210830080705_createReviewsTable.js
