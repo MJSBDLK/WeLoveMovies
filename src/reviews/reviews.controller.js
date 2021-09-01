@@ -12,7 +12,7 @@ async function list(req, res, next) {
 }
 
 async function destroy(req, res, next) {
-const {reviewId} = req.params
+  const { reviewId } = req.params;
   const review = await service.readReview(reviewId);
   if (review) {
     await service.delete(reviewId);
@@ -20,11 +20,52 @@ const {reviewId} = req.params
   }
   next({
     status: 404,
-    message: `n-naw`
+    message: `n-naw`,
+  });
+}
+
+// async function update(req, res, next) {
+//   const { reviewId } = req.params;
+//   const reviewUpdates = {...req.body.data, review_id: reviewId};
+//   console.log(`reviewUpdates:`, reviewUpdates);
+//   const foundReview = await service.readReview(reviewId);
+//   if (foundReview) {
+//     const updatedReview = await service.update(reviewUpdates);
+//     updatedReview.critic = await service.readCritic(updatedReview.critic_id);
+//     res.json({ data: updatedReview });
+//   }
+//   next({
+//     status: 404,
+//     message: `Review ${reviewId} cannot be found.`,
+//   });
+// }
+
+async function update(req, res, next) {
+  const {reviewId} = req.params;
+  const reviewUpdates = req.body.data;
+  // console.log(`reviewUpdates: `, reviewUpdates);
+  const foundReview = await service.readReview(reviewId);
+  // console.log(`foundReview: `, foundReview);
+  if(foundReview) {
+    const updatedReview = foundReview;
+    // console.log(`req.body.data `, req.body.data);
+    // console.log(`typeof reviewUpdates:`, typeof reviewUpdates)
+    for(let u in reviewUpdates) {
+      foundReview[u] = reviewUpdates[u];
+    }
+    await service.update(updatedReview);
+    updatedReview.critic = await service.readCritic(foundReview.critic_id);
+    // console.log(`updatedReview: `, updatedReview);
+    res.json({data: updatedReview});
+  }
+  next({
+    status: 404,
+    message: `Review ${reviewId} cannot be found.`
   })
 }
 
 module.exports = {
   list: asyncErrorBoundary(list),
   delete: asyncErrorBoundary(destroy),
+  update: asyncErrorBoundary(update),
 };
