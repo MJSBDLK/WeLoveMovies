@@ -24,22 +24,6 @@ async function destroy(req, res, next) {
   });
 }
 
-// async function update(req, res, next) {
-//   const { reviewId } = req.params;
-//   const reviewUpdates = {...req.body.data, review_id: reviewId};
-//   console.log(`reviewUpdates:`, reviewUpdates);
-//   const foundReview = await service.readReview(reviewId);
-//   if (foundReview) {
-//     const updatedReview = await service.update(reviewUpdates);
-//     updatedReview.critic = await service.readCritic(updatedReview.critic_id);
-//     res.json({ data: updatedReview });
-//   }
-//   next({
-//     status: 404,
-//     message: `Review ${reviewId} cannot be found.`,
-//   });
-// }
-
 async function update(req, res, next) {
   const {reviewId} = req.params;
   const reviewUpdates = req.body.data;
